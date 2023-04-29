@@ -3,6 +3,7 @@ package com.barbershop.application.mappers;
 import java.util.List;
 import com.barbershop.application.DTOs.UserDTO;
 import com.barbershop.application.entities.User;
+import com.barbershop.application.enums.Role;
 
 public class UserMapper {
 	
@@ -13,7 +14,7 @@ public class UserMapper {
 				userDto.email, 
 				userDto.birth,  
 				userDto.active,
-				userDto.role);
+				Role.get(userDto.role));
 	}
 	
 	public static List<User> map(List<UserDTO> userDtoList) {
@@ -28,7 +29,7 @@ public class UserMapper {
 				user.getEmail(), 
 				user.getBirth(),  
 				user.getActive(),
-				user.getRole());
+				user.getRole().getValue());
 	}
 	
 	public static List<UserDTO> reverseMap(List<User> userDtoList) {

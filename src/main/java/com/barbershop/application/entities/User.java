@@ -2,6 +2,7 @@ package com.barbershop.application.entities;
 
 import java.util.Date;
 import java.util.List;
+import org.springframework.http.HttpStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -9,7 +10,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import com.barbershop.application.core.base.classes.BaseEntity;
 import com.barbershop.application.enums.Role;
-import com.barbershop.application.exceptions.custom.CPFException;
+import com.barbershop.application.exceptions.custom.CustomApplicationException;
 import com.barbershop.application.validators.CPFValidator;
 
 @Entity
@@ -32,19 +33,6 @@ public class User extends BaseEntity<Long> {
 	private List<Appointment> appointments;
 
 	public User() {
-	}
-
-	public User(Long id, String name, String cpf, String email, String password, Date birth, Boolean active, Role role,
-			List<Appointment> appointments) {
-		super(id);
-		this.name = name;
-		this.cpf = cpf;
-		this.email = email;
-		this.password = password;
-		this.birth = birth;
-		this.active = active;
-		this.role = role;
-		this.appointments = appointments;
 	}
 
 	public User(String name, String cpf, String email, Date birth, Boolean active, Role role) {
@@ -92,7 +80,11 @@ public class User extends BaseEntity<Long> {
 	@Override
 	public void validate() {
 		if (!CPFValidator.isValid(cpf)) {
-			throw new CPFException("Invalid CPF");
+			throw new CustomApplicationException("Invalid CPF", HttpStatus.BAD_REQUEST);
+		}
+		
+		if(role.equals(Role.UNDEFINED)) {
+			throw new CustomApplicationException("Select a Valid Role", HttpStatus.BAD_REQUEST);
 		}
 	}
 }
