@@ -1,0 +1,37 @@
+package com.barbershop.application.mappers;
+
+import java.util.List;
+import com.barbershop.application.DTOs.UserDTO;
+import com.barbershop.application.entities.User;
+
+public class UserMapper {
+	
+	public static User map(UserDTO userDto) {
+		return new User( 
+				userDto.name,  
+				userDto.cpf,  
+				userDto.email, 
+				userDto.birth,  
+				userDto.active,
+				userDto.role);
+	}
+	
+	public static List<User> map(List<UserDTO> userDtoList) {
+		return userDtoList.stream().map(x -> map(x)).toList();
+	}
+	
+	public static UserDTO reverseMap(User user) {
+		return new UserDTO( 
+				user.getId(),  
+				user.getName(),  
+				user.getCpf(),  
+				user.getEmail(), 
+				user.getBirth(),  
+				user.getActive(),
+				user.getRole());
+	}
+	
+	public static List<UserDTO> reverseMap(List<User> userDtoList) {
+		return userDtoList.stream().map(x -> reverseMap(x)).toList();
+	}
+}

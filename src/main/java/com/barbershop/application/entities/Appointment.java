@@ -2,36 +2,41 @@ package com.barbershop.application.entities;
 
 import java.util.Date;
 
+import com.barbershop.application.core.base.classes.BaseEntity;
+
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "appointments")
-public class Appointment {
+public class Appointment extends BaseEntity<Long> {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 	private Date start;
 	private Date end;
-	@OneToMany(mappedBy = "appointments")
+
+	@ManyToOne
 	private User customer;
-	@OneToMany(mappedBy = "appointments")
+
+	@ManyToOne
 	private User employee;
 
 	public Appointment() {
 	}
 
 	public Appointment(Long id, Date start, Date end, User customer, User employee) {
-		this.id = id;
+		super(id);
 		this.start = start;
 		this.end = end;
 		this.customer = customer;
 		this.employee = employee;
 	}
 
+	public Date getStart() {
+		return start;
+	}
+
+	public Date getEnd() {
+		return end;
+	}
 }
