@@ -6,9 +6,8 @@ public class ServiceDTO {
 	public String name;
 	public Integer duration;
 	public String kindOfCare;
-	
-	public ServiceDTO(Long id,Float currentPrice, String name, Integer duration, String kindOfCare) {
-		
+
+	public ServiceDTO(Long id, Float currentPrice, String name, Integer duration, String kindOfCare) {
 		this.id = id;
 		this.currentPrice = currentPrice;
 		this.name = name;

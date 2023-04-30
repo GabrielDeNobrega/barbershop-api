@@ -22,12 +22,12 @@ public class UserController {
 	@GetMapping("/all")
 	public ResponseEntity<List<UserDTO>> getAllUsers() {
 		List<UserDTO> userList =  userService.getAllUsers();
-		return new ResponseEntity<List<UserDTO>>(userList, HttpStatus.ACCEPTED);
+		return new ResponseEntity<List<UserDTO>>(userList, HttpStatus.OK);
 	}
 	
 	@PostMapping("/register")
 	public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO user) {
 		UserDTO createdUser = userService.addUser(user);
-		return new ResponseEntity<UserDTO>(createdUser, HttpStatus.ACCEPTED);
+		return new ResponseEntity<UserDTO>(createdUser, HttpStatus.CREATED);
 	}
 }

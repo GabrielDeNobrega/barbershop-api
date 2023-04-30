@@ -9,17 +9,16 @@ import com.barbershop.application.repositories.ServiceRepository;
 
 @org.springframework.stereotype.Service
 public class ServiceService {
-	
+
 	@Autowired
 	private ServiceRepository serviceRepository;
 
-	public List<ServiceDTO> getAllServices(){
+	public List<ServiceDTO> getAllServices() {
 		return ServiceMapper.reverseMap(serviceRepository.findAll());
 	}
-	
-	public ServiceDTO addService(ServiceDTO service){
+
+	public ServiceDTO addService(ServiceDTO service) {
 		Service createdService = serviceRepository.save(ServiceMapper.map(service));
 		return ServiceMapper.reverseMap(createdService);
 	}
-	
 }

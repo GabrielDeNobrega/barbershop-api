@@ -12,13 +12,13 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "service")
+@Table(name = "services")
 public class Service extends BaseEntity<Long>{
 	private Float currentPrice;
 	private String name;
 	private Integer duration;
 	
-	@OneToMany(mappedBy = "serviceDetail")
+	@OneToMany(mappedBy = "service")
 	private List<Appointment> appointments;
 	
 	@Enumerated(EnumType.STRING)
@@ -50,6 +50,10 @@ public class Service extends BaseEntity<Long>{
 		return kindOfCare;
 	}
 	
+	public List<Appointment> getAppointments() {
+		return appointments;
+	}
+
 	@Override
 	public void validate(){
 		if(currentPrice == 0)
