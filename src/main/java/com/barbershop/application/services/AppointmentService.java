@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import com.barbershop.application.DTOs.AppointmentDTO;
+import com.barbershop.application.core.base.classes.BaseEntity;
 import com.barbershop.application.entities.Appointment;
 import com.barbershop.application.entities.Service;
 import com.barbershop.application.entities.User;
@@ -32,18 +33,27 @@ public class AppointmentService {
 
 	public AppointmentDTO create(AppointmentDTO appointmentDTO) {
 
-		Service service = serviceRepository.findById(appointmentDTO.serviceId)
+		if(appointmentDTO.service == null || appointmentDTO.service.id == null) 
+			throw new CustomApplicationException("Service type is required", HttpStatus.NOT_FOUND);
+		
+		if(appointmentDTO.employee == null || appointmentDTO.employee.id == null) 
+			throw new CustomApplicationException("Employee must be selected", HttpStatus.NOT_FOUND);
+		
+		if(appointmentDTO.customer == null || appointmentDTO.customer.id == null) 
+			throw new CustomApplicationException("Unable to find customer", HttpStatus.NOT_FOUND);
+		
+		User customer = userRepository.findById(appointmentDTO.customer.id)
+				.orElseThrow(() -> new CustomApplicationException("Could not find customer", HttpStatus.NOT_FOUND));
+		
+		Service service = serviceRepository.findById(appointmentDTO.service.id)
 				.orElseThrow(() -> new CustomApplicationException("Service type not found", HttpStatus.NOT_FOUND));
 
-		User custumer = userRepository.findById(appointmentDTO.custumerId)
-				.orElseThrow(() -> new CustomApplicationException("Could not find custumer", HttpStatus.NOT_FOUND));
-
-		User employee = userRepository.findById(appointmentDTO.employeeId)
+		User employee = userRepository.findById(appointmentDTO.employee.id)
 				.orElseThrow(() -> new CustomApplicationException("Could not find employee", HttpStatus.NOT_FOUND));
 
 		Appointment appointment = AppointmentMapper.map(appointmentDTO);
 
-		appointment.ConfigureAppointment(custumer, employee, service);
+		appointment.ConfigureAppointment(customer, employee, service);
 
 		appointmentRespository.save(appointment);
 

@@ -24,7 +24,7 @@ public class AppointmentController {
 		AppointmentDTO createdAppointmentDTO = appointmentService.create(appointmentDTO);
 		return new ResponseEntity<AppointmentDTO>(createdAppointmentDTO, HttpStatus.CREATED);
 	}
-
+	
 	@GetMapping("/all")
 	public ResponseEntity<List<AppointmentDTO>> getAllAppointment() {
 		return new ResponseEntity<List<AppointmentDTO>>(appointmentService.getAll(), HttpStatus.OK);

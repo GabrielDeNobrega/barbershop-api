@@ -6,9 +6,6 @@ public class AppointmentDTO {
 	public Long id;
 	public Date start;
 	public Date end;
-	public Long custumerId;
-	public Long employeeId;
-	public Long serviceId;
 	public UserDTO customer;
 	public UserDTO employee;
 	public ServiceDTO service;

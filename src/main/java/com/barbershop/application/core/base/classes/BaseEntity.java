@@ -56,5 +56,5 @@ public abstract class BaseEntity<T> implements IValidatableEntity {
 		this.deletedAt = deletedAt;
 	}
 	
-	public void validate() throws Exception {};
+	public void validate(){};
 }

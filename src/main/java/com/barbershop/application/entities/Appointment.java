@@ -57,8 +57,8 @@ public class Appointment extends BaseEntity<Long> {
 		return service;
 	}
 
-	public void ConfigureAppointment (User custumer, User employee, Service service) {
-		this.customer = custumer;
+	public void ConfigureAppointment (User customer, User employee, Service service) {
+		this.customer = customer;
 		this.employee = employee;
 		this.service = service;
 		this.price = service.getCurrentPrice();
@@ -70,7 +70,7 @@ public class Appointment extends BaseEntity<Long> {
 		if(customer.getRole().equals(Role.ADMINISTRATOR) || 
 		   customer.getRole().equals(Role.EMPLOYEE))
 			throw new CustomApplicationException(
-					"Only Custumers are allowed to schedule appointments", 
+					"Only Customers are allowed to schedule appointments", 
 					HttpStatus.BAD_REQUEST);
 		
 		if(!employee.getRole().equals(Role.EMPLOYEE))
