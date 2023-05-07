@@ -4,7 +4,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import com.barbershop.application.DTOs.AppointmentDTO;
-import com.barbershop.application.core.base.classes.BaseEntity;
 import com.barbershop.application.entities.Appointment;
 import com.barbershop.application.entities.Service;
 import com.barbershop.application.entities.User;

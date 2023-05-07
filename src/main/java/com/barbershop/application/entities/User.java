@@ -20,8 +20,6 @@ public class User extends BaseEntity<Long> {
 	private String name;
 	private String cpf;
 	private String email;
-
-	@SuppressWarnings("unused")
 	private String password;
 	private Date birth;
 	private Boolean active;
@@ -77,13 +75,17 @@ public class User extends BaseEntity<Long> {
 		return appointments;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
 	@Override
 	public void validate() {
 		if (!CPFValidator.isValid(cpf)) {
 			throw new CustomApplicationException("Invalid CPF", HttpStatus.BAD_REQUEST);
 		}
-		
-		if(role.equals(Role.UNDEFINED)) {
+
+		if (role.equals(Role.UNDEFINED)) {
 			throw new CustomApplicationException("Select a Valid Role", HttpStatus.BAD_REQUEST);
 		}
 	}

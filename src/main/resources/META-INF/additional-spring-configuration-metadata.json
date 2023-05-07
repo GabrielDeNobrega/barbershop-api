@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "secret.private-key",
+    "type": "java.security.interfaces.RSAPrivateKey",
+    "description": "A rsa private key used in the JWT encode process"
+  },
+  {
+    "name": "secret.public-key",
+    "type": "java.security.interfaces.RSAPublicKey",
+    "description": "A rsa public key used in the JWT decode and encode process"
+  }
+]}
