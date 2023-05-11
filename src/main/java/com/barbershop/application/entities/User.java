@@ -17,7 +17,7 @@ import com.barbershop.application.validators.CPFValidator;
 @Table(name = "users")
 public class User extends BaseEntity<Long> {
 
-	private String name;
+	private String username;
 	private String cpf;
 	private String email;
 	private String password;
@@ -33,8 +33,8 @@ public class User extends BaseEntity<Long> {
 	public User() {
 	}
 
-	public User(String name, String cpf, String email, Date birth, Boolean active, Role role) {
-		this.name = name;
+	public User(String username, String cpf, String email, Date birth, Boolean active, Role role) {
+		this.username = username;
 		this.cpf = cpf;
 		this.email = email;
 		this.birth = birth;
@@ -47,8 +47,8 @@ public class User extends BaseEntity<Long> {
 		this.password = password;
 	}
 
-	public String getName() {
-		return name;
+	public String getUsername() {
+		return username;
 	}
 
 	public String getCpf() {

@@ -28,7 +28,7 @@ public class UserService {
 	}
 	
 	public UserDTO getUser(String username){
-		User user = userRepository.findByName(username)
+		User user = userRepository.findByUsername(username)
 				.orElseThrow(() -> new CustomApplicationException("Could not find any customer with specified name", HttpStatus.NOT_FOUND));
 		
 		return UserMapper.reverseMap(user);

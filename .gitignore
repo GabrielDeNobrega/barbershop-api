@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Ignores private/public rsa keys 
+**/certs/private.pem
+**/certs/public.pem
