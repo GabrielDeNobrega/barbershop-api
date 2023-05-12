@@ -14,6 +14,7 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -29,27 +30,32 @@ import com.nimbusds.jose.proc.SecurityContext;
 		prePostEnabled = true,
 		securedEnabled = true)
 public class SecurityConfig {
+	
 	@Autowired
 	private SecretProperties secretProperties;
 	
+	@Bean
+	CustomAuthorizationResponseFilter AuthResponseFilter() {
+		return new CustomAuthorizationResponseFilter();
+	}
+
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
-                
                 .sessionManagement(session -> session
                 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) 
                 .authorizeHttpRequests(auth -> auth
                 		.requestMatchers("/auth/**", "/user/register").permitAll()
                 		.anyRequest().authenticated())
-                .cors()
-                .and()
+                .cors(Customizer.withDefaults())
                 .oauth2ResourceServer(resourceServer -> resourceServer
                 		.jwt()
                 		.jwtAuthenticationConverter(
                 				new RoleClaimConverter(
                 						new JwtGrantedAuthoritiesConverter())))
                 .httpBasic(Customizer.withDefaults())
+                .addFilterAfter(AuthResponseFilter(), BasicAuthenticationFilter.class)
                 .build();
     }
     

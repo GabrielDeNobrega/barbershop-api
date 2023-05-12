@@ -1,7 +1,6 @@
 package com.barbershop.application;
 
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,12 +17,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleBadRequest(CustomApplicationException ex, WebRequest request) {
 		return handleExceptionInternal(ex, mountErrorMessage(ex), new HttpHeaders(), ex.getHttpStatus(), request);
 	}
-
+	
 	private ErrorMessage mountErrorMessage(CustomApplicationException ex) {
 		return new ErrorMessage(ex.getMessage(), ex.getHttpStatus(), ex.getHttpStatus().value());
-	}
-	
-	private ErrorMessage mountErrorMessageWithDefaultStatus(String message, HttpStatus httpStatus ) {
-		return new ErrorMessage(message, httpStatus, httpStatus.value());
 	}
 }
