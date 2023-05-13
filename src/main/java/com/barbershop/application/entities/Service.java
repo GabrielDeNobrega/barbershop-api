@@ -1,7 +1,6 @@
 package com.barbershop.application.entities;
 
 import java.util.List;
-import org.springframework.http.HttpStatus;
 import com.barbershop.application.core.base.classes.BaseEntity;
 import com.barbershop.application.enums.KindOfCare;
 import com.barbershop.application.exceptions.custom.CustomApplicationException;
@@ -57,6 +56,6 @@ public class Service extends BaseEntity<Long>{
 	@Override
 	public void validate(){
 		if(currentPrice == 0)
-			throw new CustomApplicationException("Price must be greater than 0", HttpStatus.BAD_REQUEST);
+			throw CustomApplicationException.badRequest("Price must be greater than 0");
 	}
 }

@@ -19,18 +19,16 @@ public class CustomAuthorizationResponseFilter extends OncePerRequestFilter {
 
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
-		System.out.println(response.getStatus());
-
+	
 		filterChain.doFilter(request, response);
-
-		System.out.println(response.getStatus());
 		if (response.getStatus() == HttpStatus.UNAUTHORIZED.value()) {
 			buildResponseError("You are not authorized to perform this action",
 					response, HttpStatus.UNAUTHORIZED);		
 		}
-		else if (response.getStatus() == HttpStatus.FORBIDDEN.value())
+		else if (response.getStatus() == HttpStatus.FORBIDDEN.value()) {
 			buildResponseError("You do not have permission to perform this action",
 					response, HttpStatus.FORBIDDEN);
+		}
 		
 	}
 	

@@ -13,7 +13,15 @@ public class CustomApplicationException extends RuntimeException {
 		this.message = message;
 		this.httpStatus = httpStatus;
 	}
-
+	
+	public static CustomApplicationException badRequest(String message) {
+		return new CustomApplicationException(message, HttpStatus.BAD_REQUEST);
+	}
+	
+	public static CustomApplicationException notFound(String message) {
+		return new CustomApplicationException(message, HttpStatus.NOT_FOUND);
+	}
+	
 	public String getMessage() {
 		return message;
 	}

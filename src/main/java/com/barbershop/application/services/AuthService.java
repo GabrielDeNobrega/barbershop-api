@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
@@ -20,9 +21,12 @@ public class AuthService {
 
 	@Autowired
 	private UserRepository userRepository;
-
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
 	private final JwtEncoder jwtEncoder;
-
+	
 	public AuthService(JwtEncoder jwtEncoder) {
 		this.jwtEncoder = jwtEncoder;
 	}
@@ -30,12 +34,17 @@ public class AuthService {
 	public UserCredentialsDTO authenticate(UserCredentialsDTO userCredentialsDTO) {
 
 		User user = userRepository.findByEmail(userCredentialsDTO.email)
-				.orElseThrow(() -> new CustomApplicationException("User not found", HttpStatus.NOT_FOUND));
+				.orElseThrow(() -> CustomApplicationException.notFound("User not found"));
+		
+		if(!passwordEncoder.matches(userCredentialsDTO.password, user.getPassword())) {
+			throw CustomApplicationException.badRequest("Incorrect password");
+		}
 		
 		String token = generateToken(user);
 		
 		if(token == null)
-			new CustomApplicationException("Unable to gerenate token", HttpStatus.INTERNAL_SERVER_ERROR);
+			throw new CustomApplicationException("Unable to gerenate token", 
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		
 		return AuthMapper.map(user, token);
 	}

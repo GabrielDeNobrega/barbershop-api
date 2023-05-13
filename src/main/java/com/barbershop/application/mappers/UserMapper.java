@@ -12,6 +12,7 @@ public class UserMapper {
 				userDto.username,  
 				userDto.cpf,  
 				userDto.email, 
+				userDto.password,
 				userDto.birth,  
 				userDto.active,
 				Role.get(userDto.role));

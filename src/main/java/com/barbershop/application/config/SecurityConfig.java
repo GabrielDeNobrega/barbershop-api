@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
@@ -15,7 +16,6 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -38,7 +38,7 @@ public class SecurityConfig {
 	CustomAuthorizationResponseFilter AuthResponseFilter() {
 		return new CustomAuthorizationResponseFilter();
 	}
-
+	
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -48,12 +48,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                 		.requestMatchers("/auth/**", "/user/register").permitAll()
                 		.anyRequest().authenticated())
-                .cors(Customizer.withDefaults())
                 .oauth2ResourceServer(resourceServer -> resourceServer
                 		.jwt()
                 		.jwtAuthenticationConverter(
                 				new RoleClaimConverter(
                 						new JwtGrantedAuthoritiesConverter())))
+                .cors(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
                 .addFilterAfter(AuthResponseFilter(), BasicAuthenticationFilter.class)
                 .build();
@@ -69,5 +69,10 @@ public class SecurityConfig {
     	  JWK jwk = new RSAKey.Builder(secretProperties.getPublicKey()).privateKey(secretProperties.getPrivateKey()).build();
     	    JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
     	    return new NimbusJwtEncoder(jwks);
+    }
+    
+    @Bean
+    BCryptPasswordEncoder passwordEncoder () {
+    	return new BCryptPasswordEncoder();
     }
 }

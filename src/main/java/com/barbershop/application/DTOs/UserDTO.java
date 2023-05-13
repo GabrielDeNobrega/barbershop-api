@@ -7,6 +7,7 @@ public class UserDTO {
 	public String username;
 	public String cpf;
 	public String email;
+	public String password;
 	public Date birth;
 	public Boolean active;
 	public String role;
