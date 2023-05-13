@@ -9,9 +9,10 @@ public class UserMapper {
 	
 	public static User map(UserDTO userDto) {
 		return new User( 
-				userDto.name,  
+				userDto.username,  
 				userDto.cpf,  
 				userDto.email, 
+				userDto.password,
 				userDto.birth,  
 				userDto.active,
 				Role.get(userDto.role));
@@ -24,7 +25,7 @@ public class UserMapper {
 	public static UserDTO reverseMap(User user) {
 		return new UserDTO( 
 				user.getId(),  
-				user.getName(),  
+				user.getUsername(),  
 				user.getCpf(),  
 				user.getEmail(), 
 				user.getBirth(),  

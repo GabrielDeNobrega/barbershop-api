@@ -5,7 +5,7 @@ import java.util.Arrays;
 public enum Role{
 	ADMINISTRATOR("Administrator"), 
 	EMPLOYEE("Employee"), 
-	CUSTOMER("Custumer"),
+	CUSTOMER("Customer"),
 	UNDEFINED("Undefined");
 	
 	private String value;

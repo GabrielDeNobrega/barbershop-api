@@ -1,7 +1,6 @@
 package com.barbershop.application.entities;
 
 import java.util.Date;
-import org.springframework.http.HttpStatus;
 import com.barbershop.application.core.base.classes.BaseEntity;
 import com.barbershop.application.enums.Role;
 import com.barbershop.application.exceptions.custom.CustomApplicationException;
@@ -69,14 +68,12 @@ public class Appointment extends BaseEntity<Long> {
 	public void validate(){
 		if(customer.getRole().equals(Role.ADMINISTRATOR) || 
 		   customer.getRole().equals(Role.EMPLOYEE))
-			throw new CustomApplicationException(
-					"Only Customers are allowed to schedule appointments", 
-					HttpStatus.BAD_REQUEST);
+			throw CustomApplicationException.badRequest(
+					"Only Customers are allowed to schedule appointments");
 		
 		if(!employee.getRole().equals(Role.EMPLOYEE))
-			throw new CustomApplicationException(
-					"Unexpected attribution of an appointment to a non-employee user", 
-					HttpStatus.BAD_REQUEST);
+			throw CustomApplicationException.badRequest(
+					"Unexpected attribution of an appointment to a non-employee user");
 	}
 }
 
