@@ -17,13 +17,13 @@ import com.barbershop.application.services.ServiceService;
 public class ServiceController {
 	@Autowired
 	private ServiceService serviceService;
-
+	
 	@GetMapping("/all")
 	public ResponseEntity<List<ServiceDTO>> getAllServices() {
 		List<ServiceDTO> serviceList = serviceService.getAllServices();
 		return new ResponseEntity<List<ServiceDTO>>(serviceList, HttpStatus.OK);
 	}
-
+	
 	@PostMapping("/add")
 	public ResponseEntity<ServiceDTO> addService(@RequestBody ServiceDTO user) {
 		ServiceDTO createdService = serviceService.addService(user);

@@ -2,6 +2,8 @@ package com.barbershop.application.DTOs;
 
 import java.util.Date;
 
+import com.barbershop.application.formatters.CpfFormatter;
+
 public class UserDTO {
 	public Long id;
 	public String username;
@@ -15,7 +17,7 @@ public class UserDTO {
 	public UserDTO(Long id, String username, String cpf, String email, Date birth, Boolean active, String role) {
 		this.id = id;
 		this.username = username;
-		this.cpf = cpf;
+		this.cpf = CpfFormatter.format(cpf);   
 		this.email = email;
 		this.birth = birth;
 		this.active = active;

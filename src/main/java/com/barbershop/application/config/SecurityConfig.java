@@ -1,6 +1,9 @@
 package com.barbershop.application.config;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -16,6 +19,10 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
+import com.barbershop.application.entities.User;
+import com.barbershop.application.enums.Role;
+import com.barbershop.application.repositories.UserRepository;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -34,9 +41,25 @@ public class SecurityConfig {
 	@Autowired
 	private SecretProperties secretProperties;
 	
+	@Autowired
+	private UserRepository userRepository;
+	
 	@Bean
 	CustomAuthorizationResponseFilter AuthResponseFilter() {
 		return new CustomAuthorizationResponseFilter();
+	}
+	
+	@Bean
+	public CommandLineRunner loadDefaultAdmin() {
+	    return (args) -> {
+	    	userRepository.save(new User("Admin", 
+	    			"86171995045", 
+	    			"admin.admin@gmail.com",
+	    			"admin123456",
+	    			new Date(),
+	    			true,
+	    			Role.ADMINISTRATOR));
+	    };
 	}
 	
     @Bean

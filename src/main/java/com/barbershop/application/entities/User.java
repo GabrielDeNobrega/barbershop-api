@@ -12,6 +12,7 @@ import jakarta.persistence.Table;
 import com.barbershop.application.core.base.classes.BaseEntity;
 import com.barbershop.application.enums.Role;
 import com.barbershop.application.exceptions.custom.CustomApplicationException;
+import com.barbershop.application.formatters.CpfFormatter;
 import com.barbershop.application.validators.CPFValidator;
 import com.barbershop.application.validators.EmailValidator;
 
@@ -47,7 +48,7 @@ public class User extends BaseEntity<Long> {
 			Boolean active, 
 			Role role) {
 		this.username = username;
-		this.cpf = cpf;
+		this.cpf = CpfFormatter.format(cpf);
 		this.email = email;
 		this.password = password;
 		this.birth = birth;

@@ -17,7 +17,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleBadRequest(CustomApplicationException ex, WebRequest request) {
 		return handleExceptionInternal(ex, mountErrorMessage(ex), new HttpHeaders(), ex.getHttpStatus(), request);
 	}
-	
+
 	private ErrorMessage mountErrorMessage(CustomApplicationException ex) {
 		return new ErrorMessage(ex.getMessage(), ex.getHttpStatus(), ex.getHttpStatus().value());
 	}
