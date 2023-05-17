@@ -21,7 +21,6 @@ public class AuthController {
 
 	@PostMapping("/authenticate")
 	public ResponseEntity<AuthCredentialsDTO> token(@RequestBody UserCredentialsDTO userCredentialsDTO) {
-		System.out.println(userCredentialsDTO.email);
 		AuthCredentialsDTO authCredentials = authService.authenticate(userCredentialsDTO);
 		return new ResponseEntity<AuthCredentialsDTO>(authCredentials, HttpStatus.OK);
 	}
