@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.barbershop.application.DTOs.AppointmentDTO;
 import com.barbershop.application.services.AppointmentService;
 
-import jakarta.annotation.security.RolesAllowed;
 
 @RestController
 @RequestMapping(value = "/appointment")

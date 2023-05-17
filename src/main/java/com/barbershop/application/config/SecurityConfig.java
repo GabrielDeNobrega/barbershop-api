@@ -50,7 +50,7 @@ public class SecurityConfig {
 	}
 	
 	@Bean
-	public CommandLineRunner loadDefaultAdmin() {
+	CommandLineRunner loadDefaultAdmin() {
 	    return (args) -> {
 	    	userRepository.save(new User("Admin", 
 	    			"86171995045", 

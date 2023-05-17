@@ -14,6 +14,8 @@ public class UserDTO {
 	public Boolean active;
 	public String role;
 	
+	public UserDTO() {}
+	
 	public UserDTO(Long id, String username, String cpf, String email, Date birth, Boolean active, String role) {
 		this.id = id;
 		this.username = username;

@@ -11,6 +11,8 @@ public class AppointmentDTO {
 	public ServiceDTO service;
 	public Date createdAt;
 	
+	public AppointmentDTO() {}
+	
 	public AppointmentDTO(
 			Long id, 
 			Date start, 
@@ -19,7 +21,6 @@ public class AppointmentDTO {
 			UserDTO employee, 
 			ServiceDTO service,
 			Date createdAt) {
-		
 		this.id = id;
 		this.start = start;
 		this.end = end;

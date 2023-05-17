@@ -56,7 +56,7 @@ public class Appointment extends BaseEntity<Long> {
 		return service;
 	}
 
-	public void ConfigureAppointment (User customer, User employee, Service service) {
+	public void configureAppointment (User customer, User employee, Service service) {
 		this.customer = customer;
 		this.employee = employee;
 		this.service = service;
