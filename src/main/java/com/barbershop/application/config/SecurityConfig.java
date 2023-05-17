@@ -19,7 +19,6 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-
 import com.barbershop.application.entities.User;
 import com.barbershop.application.enums.Role;
 import com.barbershop.application.repositories.UserRepository;
@@ -52,13 +51,15 @@ public class SecurityConfig {
 	@Bean
 	CommandLineRunner loadDefaultAdmin() {
 	    return (args) -> {
-	    	userRepository.save(new User("Admin", 
-	    			"86171995045", 
-	    			"admin.admin@gmail.com",
-	    			"admin123456",
-	    			new Date(),
-	    			true,
-	    			Role.ADMINISTRATOR));
+	    	if(userRepository.findByEmail("admin.admin@gmail.com").orElse(null) == null) 
+		    	userRepository.save(new User("Admin", 
+		    			"86171995045", 
+		    			"admin.admin@gmail.com",
+		    			"admin123456",
+		    			new Date(),
+		    			true,
+		    			Role.ADMINISTRATOR));
+	    	
 	    };
 	}
 	
@@ -76,7 +77,6 @@ public class SecurityConfig {
                 		.jwtAuthenticationConverter(
                 				new RoleClaimConverter(
                 						new JwtGrantedAuthoritiesConverter())))
-                .cors(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
                 .addFilterAfter(AuthResponseFilter(), BasicAuthenticationFilter.class)
                 .build();

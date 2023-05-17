@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.barbershop.application.DTOs.AuthCredentialsDTO;
 import com.barbershop.application.DTOs.UserCredentialsDTO;
 import com.barbershop.application.services.AuthService;
 
@@ -19,9 +20,9 @@ public class AuthController {
 	private AuthService authService;
 
 	@PostMapping("/authenticate")
-	public ResponseEntity<UserCredentialsDTO> token(@RequestBody UserCredentialsDTO userCredentialsDTO) {
+	public ResponseEntity<AuthCredentialsDTO> token(@RequestBody UserCredentialsDTO userCredentialsDTO) {
 		System.out.println(userCredentialsDTO.email);
-		UserCredentialsDTO userCredentials = authService.authenticate(userCredentialsDTO);
-		return new ResponseEntity<UserCredentialsDTO>(userCredentials, HttpStatus.OK);
+		AuthCredentialsDTO authCredentials = authService.authenticate(userCredentialsDTO);
+		return new ResponseEntity<AuthCredentialsDTO>(authCredentials, HttpStatus.OK);
 	}
 }

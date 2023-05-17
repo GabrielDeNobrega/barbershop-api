@@ -9,6 +9,8 @@ import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
+
+import com.barbershop.application.DTOs.AuthCredentialsDTO;
 import com.barbershop.application.DTOs.UserCredentialsDTO;
 import com.barbershop.application.entities.User;
 import com.barbershop.application.exceptions.custom.CustomApplicationException;
@@ -31,7 +33,7 @@ public class AuthService {
 		this.jwtEncoder = jwtEncoder;
 	}
 
-	public UserCredentialsDTO authenticate(UserCredentialsDTO userCredentialsDTO) {
+	public AuthCredentialsDTO authenticate(UserCredentialsDTO userCredentialsDTO) {
 
 		User user = userRepository.findByEmail(userCredentialsDTO.email)
 				.orElseThrow(() -> CustomApplicationException.notFound("User not found"));
