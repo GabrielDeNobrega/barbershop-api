@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.barbershop.application.DTOs.UserDTO;
 import com.barbershop.application.entities.User;
 import com.barbershop.application.exceptions.custom.CustomApplicationException;
+import com.barbershop.application.formatters.CpfFormatter;
 import com.barbershop.application.mappers.UserMapper;
 import com.barbershop.application.repositories.UserRepository;
 
@@ -22,7 +23,7 @@ public class UserService {
 	
 	public UserDTO addUser(UserDTO userDto){
 		
-		if(userRepository.findByCpf(userDto.cpf).orElse(null) != null)
+		if(userRepository.findByCpf(CpfFormatter.format(userDto.cpf)).orElse(null) != null)
 			throw CustomApplicationException.badRequest("A user with this CPF already exists");
 		
 		if(userRepository.findByEmail(userDto.email).orElse(null) != null)
