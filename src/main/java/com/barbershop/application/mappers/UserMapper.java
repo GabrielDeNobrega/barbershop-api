@@ -13,6 +13,7 @@ public class UserMapper {
 				userDto.cpf,  
 				userDto.email, 
 				userDto.password,
+				userDto.phoneNumber,
 				userDto.birth,  
 				userDto.active,
 				Role.get(userDto.role));
@@ -28,6 +29,7 @@ public class UserMapper {
 				user.getUsername(),  
 				user.getCpf(),  
 				user.getEmail(), 
+				user.getPhoneNumber(),
 				user.getBirth(),  
 				user.getActive(),
 				user.getRole().getValue());

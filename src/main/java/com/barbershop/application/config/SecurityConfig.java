@@ -56,6 +56,7 @@ public class SecurityConfig {
 		    			"86171995045", 
 		    			"admin.admin@gmail.com",
 		    			"admin123456",
+		    			"(11) 78913-8113",
 		    			new Date(),
 		    			true,
 		    			Role.ADMINISTRATOR));

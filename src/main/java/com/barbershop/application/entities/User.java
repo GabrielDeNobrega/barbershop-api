@@ -15,6 +15,7 @@ import com.barbershop.application.exceptions.custom.CustomApplicationException;
 import com.barbershop.application.formatters.CpfFormatter;
 import com.barbershop.application.validators.CPFValidator;
 import com.barbershop.application.validators.EmailValidator;
+import com.barbershop.application.validators.EntityValidator;
 
 @Entity
 @Table(name = "users")
@@ -22,6 +23,7 @@ public class User extends BaseEntity<Long> {
 
 	private String username;
 	private String password;
+	private String phoneNumber;
 	private Date birth;
 	private Boolean active;
 
@@ -43,7 +45,8 @@ public class User extends BaseEntity<Long> {
 	public User(String username, 
 			String cpf, 
 			String email, 
-			String password, 
+			String password,
+			String phoneNumber,
 			Date birth, 
 			Boolean active, 
 			Role role) {
@@ -51,13 +54,14 @@ public class User extends BaseEntity<Long> {
 		this.cpf = CpfFormatter.format(cpf);
 		this.email = email;
 		this.password = password;
+		this.phoneNumber = phoneNumber;		
 		this.birth = birth;
 		this.active = active;
 		this.role = role;
 		validate();
 		encryptPassword(password);
 	}
-
+	
 	public void encryptPassword(String password) {
 		this.password = new BCryptPasswordEncoder().encode(password);
 	}
@@ -94,6 +98,10 @@ public class User extends BaseEntity<Long> {
 		return password;
 	}
 
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
 	@Override
 	public void validate() {
 		
@@ -108,5 +116,12 @@ public class User extends BaseEntity<Long> {
 		
 		if(password.length() < 8)
 			throw CustomApplicationException.badRequest("Password must have at least 8 characters");
+		
+		if(EntityValidator.isNullOrEmpty(username))
+			throw CustomApplicationException.badRequest("Username cannot be empty");
+		
+		if(EntityValidator.isNullOrEmpty(phoneNumber))
+			throw CustomApplicationException.badRequest("PhoneNumber cannot be empty");
+		
 	}
 }
