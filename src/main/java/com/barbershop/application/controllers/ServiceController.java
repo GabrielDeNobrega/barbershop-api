@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,13 +18,19 @@ import com.barbershop.application.services.ServiceService;
 public class ServiceController {
 	@Autowired
 	private ServiceService serviceService;
-	
+
 	@GetMapping("/all")
 	public ResponseEntity<List<ServiceDTO>> getAllServices() {
 		List<ServiceDTO> serviceList = serviceService.getAllServices();
 		return new ResponseEntity<List<ServiceDTO>>(serviceList, HttpStatus.OK);
 	}
-	
+
+	@GetMapping("/{serviceId}")
+	public ResponseEntity<ServiceDTO> getServiceById(@PathVariable Long serviceId) {
+		ServiceDTO serviceList = serviceService.getServiceById(serviceId);
+		return new ResponseEntity<ServiceDTO>(serviceList, HttpStatus.OK);
+	}
+
 	@PostMapping("/add")
 	public ResponseEntity<ServiceDTO> addService(@RequestBody ServiceDTO user) {
 		ServiceDTO createdService = serviceService.addService(user);

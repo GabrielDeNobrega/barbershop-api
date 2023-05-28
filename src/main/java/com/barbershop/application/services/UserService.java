@@ -4,10 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.barbershop.application.DTOs.EmployeeDTO;
 import com.barbershop.application.DTOs.UserDTO;
 import com.barbershop.application.entities.User;
+import com.barbershop.application.enums.Role;
 import com.barbershop.application.exceptions.custom.CustomApplicationException;
 import com.barbershop.application.formatters.CpfFormatter;
+import com.barbershop.application.mappers.EmployeeMapper;
 import com.barbershop.application.mappers.UserMapper;
 import com.barbershop.application.repositories.UserRepository;
 
@@ -35,8 +39,16 @@ public class UserService {
 	
 	public UserDTO getUser(String username){
 		User user = userRepository.findByUsername(username)
-				.orElseThrow(() -> CustomApplicationException.badRequest("Could not find any customer with specified name"));
+				.orElseThrow(() -> CustomApplicationException.notFound("Could not find any customer with specified name"));
 		
 		return UserMapper.reverseMap(user);
 	}
+	
+	public List<EmployeeDTO> getAllEmployees(){
+		List<User> employeeList = userRepository.findAllByRoleAndDeletedAtNull(Role.EMPLOYEE)
+				.orElseThrow(() -> CustomApplicationException.badRequest("Could not find any employee"));
+		
+		return EmployeeMapper.reverseMap(employeeList);
+	}
+	
 }

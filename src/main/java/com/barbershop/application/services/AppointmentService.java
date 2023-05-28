@@ -37,7 +37,7 @@ public class AppointmentService {
 	}
 	
 
-	public AppointmentDTO create(AppointmentDTO appointmentDTO) {
+	public AppointmentDTO create(AppointmentDTO appointmentDTO, Long customerId) {
 
 		if(appointmentDTO.service == null || appointmentDTO.service.id == null) 
 			throw CustomApplicationException.badRequest("Service type is required");
@@ -45,10 +45,7 @@ public class AppointmentService {
 		if(appointmentDTO.employee == null || appointmentDTO.employee.id == null) 
 			throw CustomApplicationException.badRequest("Employee must be selected");
 		
-		if(appointmentDTO.customer == null || appointmentDTO.customer.id == null) 
-			throw CustomApplicationException.badRequest("Unable to find customer");
-		
-		User customer = userRepository.findById(appointmentDTO.customer.id)
+		User customer = userRepository.findById(customerId)
 				.orElseThrow(() -> CustomApplicationException.badRequest("Could not find customer"));
 		
 		Service service = serviceRepository.findById(appointmentDTO.service.id)

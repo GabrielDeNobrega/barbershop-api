@@ -11,11 +11,11 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "appointments")
 public class Appointment extends BaseEntity<Long> {
-
+	
 	private Date start;
 	private Date end;
 	private Float price;
-
+	
 	@ManyToOne
 	private User customer;
 
@@ -25,9 +25,18 @@ public class Appointment extends BaseEntity<Long> {
 	@ManyToOne
 	private Service service;
 	
-	public Appointment() { }
+	public Appointment() {
+		super();
+	}
 	
 	public Appointment(Date start, Date end) {
+		super();
+		this.start = start;
+		this.end = end;
+	}
+	
+	public Appointment(Date start, Date end, Date createdAt) {
+		super(createdAt);
 		this.start = start;
 		this.end = end;
 	}

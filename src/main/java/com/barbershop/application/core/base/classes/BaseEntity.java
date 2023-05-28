@@ -1,8 +1,6 @@
 package com.barbershop.application.core.base.classes;
 
 import java.util.Date;
-
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import com.barbershop.application.core.base.interfaces.IValidatableEntity;
 import jakarta.persistence.GeneratedValue;
@@ -14,32 +12,36 @@ import jakarta.persistence.TemporalType;
 
 @MappedSuperclass
 public abstract class BaseEntity<T> implements IValidatableEntity {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private T id;
-	
-	@CreationTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdAt;
-	
+
 	@UpdateTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date updatedAt; 
-	
-	private Date deletedAt; 
-	
+	private Date createdAt;
+
+	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updatedAt;
+
+	private Date deletedAt;
+
 	public BaseEntity() { }
-	
+
+	public BaseEntity(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
 	public BaseEntity(T id) {
 		this.id = id;
 		this.createdAt = new Date();
 	}
-	
+
 	public T getId() {
 		return id;
 	}
-	
+
 	public Date getCreatedAt() {
 		return createdAt;
 	}
@@ -51,10 +53,10 @@ public abstract class BaseEntity<T> implements IValidatableEntity {
 	public Date getUpdatedAt() {
 		return updatedAt;
 	}
-	
+
 	public void setDeletedAt(Date deletedAt) {
 		this.deletedAt = deletedAt;
 	}
-	
-	public void validate(){};
+
+	public void validate() { };
 }
