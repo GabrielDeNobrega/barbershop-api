@@ -41,9 +41,23 @@ public class AppointmentController {
 	}
 
 	@GetMapping("/available-times/{employeeId}/{day}")
-	public ResponseEntity<List<AppointmentTimeDTO>> getAllAppointment(@PathVariable Long employeeId,
+	public ResponseEntity<List<AppointmentTimeDTO>> getAllAppointmentAvailableTimes(@PathVariable Long employeeId,
 			@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date day) {
 		List<AppointmentTimeDTO> appointmentTimes = appointmentTimeService.getAvailableAppointmentTimes(employeeId, day);
 		return new ResponseEntity<List<AppointmentTimeDTO>>(appointmentTimes, HttpStatus.OK);
+	}
+	
+	@GetMapping("/inactivate/{appointmentId}")
+	public ResponseEntity<AppointmentDTO> inactivateAppointment(@PathVariable Long appointmentId) {
+		AppointmentDTO appointmentDTO = 
+				appointmentService.changeAppointmentActiveStatus(appointmentId, false);
+		return new ResponseEntity<AppointmentDTO>(appointmentDTO, HttpStatus.OK);
+	}
+
+	@GetMapping("/activate/{appointmentId}")
+	public ResponseEntity<AppointmentDTO> activateAppointment(@PathVariable Long appointmentId) {
+		AppointmentDTO appointmentDTO = 
+				appointmentService.changeAppointmentActiveStatus(appointmentId, true);
+		return new ResponseEntity<AppointmentDTO>(appointmentDTO, HttpStatus.OK);
 	}
 }

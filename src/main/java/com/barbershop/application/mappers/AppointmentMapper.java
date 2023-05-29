@@ -1,6 +1,9 @@
 package com.barbershop.application.mappers;
 
 import java.util.List;
+
+import org.springframework.data.domain.Page;
+
 import com.barbershop.application.DTOs.AppointmentDTO;
 import com.barbershop.application.entities.Appointment;
 
@@ -23,10 +26,15 @@ public class AppointmentMapper {
 				UserMapper.reverseMap(appointment.getCustomer()), 
 				UserMapper.reverseMap(appointment.getEmployee()),  
 				ServiceMapper.reverseMap(appointment.getService()),
-				appointment.getCreatedAt());
+				appointment.getCreatedAt(),
+				appointment.getActive());
 	}
 	
 	public static List<AppointmentDTO> reverseMap(List<Appointment> appointmentDtoList) {
 		return appointmentDtoList.stream().map(x -> reverseMap(x)).toList();
+	}
+	
+	public static Page<AppointmentDTO> reverseMap(Page<Appointment> appointmentDtoPage) {
+		return appointmentDtoPage.map(x -> reverseMap(x));
 	}
 }

@@ -15,7 +15,8 @@ public class Appointment extends BaseEntity<Long> {
 	private Date start;
 	private Date end;
 	private Float price;
-	
+	private Boolean active;
+
 	@ManyToOne
 	private User customer;
 
@@ -33,12 +34,14 @@ public class Appointment extends BaseEntity<Long> {
 		super();
 		this.start = start;
 		this.end = end;
+		this.active = true;
 	}
 	
 	public Appointment(Date start, Date end, Date createdAt) {
 		super(createdAt);
 		this.start = start;
 		this.end = end;
+		this.active = true;
 	}
 
 	public Date getStart() {
@@ -64,7 +67,15 @@ public class Appointment extends BaseEntity<Long> {
 	public Service getService() {
 		return service;
 	}
+	
+	public Boolean getActive() {
+		return active;
+	}
 
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+	
 	public void configureAppointment (User customer, User employee, Service service) {
 		this.customer = customer;
 		this.employee = employee;
