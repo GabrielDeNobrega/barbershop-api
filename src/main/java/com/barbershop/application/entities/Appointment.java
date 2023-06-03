@@ -2,9 +2,12 @@ package com.barbershop.application.entities;
 
 import java.util.Date;
 import com.barbershop.application.core.base.classes.BaseEntity;
+import com.barbershop.application.enums.AppointmentStatus;
 import com.barbershop.application.enums.Role;
 import com.barbershop.application.exceptions.custom.CustomApplicationException;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -15,7 +18,9 @@ public class Appointment extends BaseEntity<Long> {
 	private Date start;
 	private Date end;
 	private Float price;
-	private Boolean active;
+	
+	@Enumerated(EnumType.STRING)
+	private AppointmentStatus status;
 
 	@ManyToOne
 	private User customer;
@@ -34,14 +39,14 @@ public class Appointment extends BaseEntity<Long> {
 		super();
 		this.start = start;
 		this.end = end;
-		this.active = true;
+		this.status = AppointmentStatus.SCHEDULED;
 	}
 	
 	public Appointment(Date start, Date end, Date createdAt) {
 		super(createdAt);
 		this.start = start;
 		this.end = end;
-		this.active = true;
+		this.status = AppointmentStatus.SCHEDULED;
 	}
 
 	public Date getStart() {
@@ -68,12 +73,12 @@ public class Appointment extends BaseEntity<Long> {
 		return service;
 	}
 	
-	public Boolean getActive() {
-		return active;
+	public AppointmentStatus getStatus() {
+		return status;
 	}
 
-	public void setActive(Boolean active) {
-		this.active = active;
+	public void setStatus(AppointmentStatus status) {
+		this.status = status;
 	}
 	
 	public void configureAppointment (User customer, User employee, Service service) {

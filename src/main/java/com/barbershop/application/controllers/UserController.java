@@ -2,12 +2,14 @@ package com.barbershop.application.controllers;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.barbershop.application.DTOs.AppointmentDTO;
 import com.barbershop.application.DTOs.UserDTO;
@@ -35,9 +37,11 @@ public class UserController extends RoleChecker{
 	}
 	
 	@GetMapping("/appointments")
-	public ResponseEntity<List<AppointmentDTO>> getAppointmentHistory() {
-		List<AppointmentDTO> appointments = 
-				appointmentService.getUserAppointments(LoggedUser.getId());
-		return new ResponseEntity<List<AppointmentDTO>>(appointments, HttpStatus.OK);
+	public ResponseEntity<Page<AppointmentDTO>> getAppointmentHistory(
+			@RequestParam(defaultValue = "0") Integer pageNumber,
+			@RequestParam(defaultValue = "10") Integer pageSize) {
+		Page<AppointmentDTO> appointments = 
+				appointmentService.getUserAppointments(LoggedUser.getId(), pageNumber, pageSize);
+		return new ResponseEntity<Page<AppointmentDTO>>(appointments, HttpStatus.OK);
 	}
 }

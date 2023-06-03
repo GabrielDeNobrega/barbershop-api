@@ -10,7 +10,7 @@ public class AppointmentDTO {
 	public UserDTO employee;
 	public ServiceDTO service;
 	public Date createdAt;
-	public boolean active;
+	public String status;
 	
 	public AppointmentDTO() {}
 	
@@ -22,7 +22,7 @@ public class AppointmentDTO {
 			UserDTO employee, 
 			ServiceDTO service,
 			Date createdAt,
-			boolean active) {
+			String status) {
 		this.id = id;
 		this.start = start;
 		this.end = end;
@@ -30,6 +30,6 @@ public class AppointmentDTO {
 		this.employee = employee;
 		this.service = service;
 		this.createdAt = createdAt;
-		this.active = active;
+		this.status = status;
 	}
 }

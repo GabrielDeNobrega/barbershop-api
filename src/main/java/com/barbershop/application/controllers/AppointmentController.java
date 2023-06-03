@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,17 +48,10 @@ public class AppointmentController {
 		return new ResponseEntity<List<AppointmentTimeDTO>>(appointmentTimes, HttpStatus.OK);
 	}
 	
-	@GetMapping("/inactivate/{appointmentId}")
-	public ResponseEntity<AppointmentDTO> inactivateAppointment(@PathVariable Long appointmentId) {
+	@PutMapping("/status/{appointmentId}/{status}")
+	public ResponseEntity<AppointmentDTO> changeAppointmentStatus(@PathVariable Long appointmentId, @PathVariable String status ) {
 		AppointmentDTO appointmentDTO = 
-				appointmentService.changeAppointmentActiveStatus(appointmentId, false);
-		return new ResponseEntity<AppointmentDTO>(appointmentDTO, HttpStatus.OK);
-	}
-
-	@GetMapping("/activate/{appointmentId}")
-	public ResponseEntity<AppointmentDTO> activateAppointment(@PathVariable Long appointmentId) {
-		AppointmentDTO appointmentDTO = 
-				appointmentService.changeAppointmentActiveStatus(appointmentId, true);
+				appointmentService.changeAppointmentStatus(appointmentId, status);
 		return new ResponseEntity<AppointmentDTO>(appointmentDTO, HttpStatus.OK);
 	}
 }

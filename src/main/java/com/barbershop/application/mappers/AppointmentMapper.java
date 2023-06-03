@@ -27,7 +27,7 @@ public class AppointmentMapper {
 				UserMapper.reverseMap(appointment.getEmployee()),  
 				ServiceMapper.reverseMap(appointment.getService()),
 				appointment.getCreatedAt(),
-				appointment.getActive());
+				appointment.getStatus().getValue());
 	}
 	
 	public static List<AppointmentDTO> reverseMap(List<Appointment> appointmentDtoList) {
