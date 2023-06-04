@@ -26,7 +26,7 @@ public interface AppointmentRespository
 
 	@Query("SELECT a FROM Appointment a " 
 			+ "WHERE a.status = :status "
-			+ "AND a.createdAt BETWEEN :startDate AND :endDate " 
+			+ "AND CAST(a.createdAt AS DATE) BETWEEN :startDate AND :endDate " 
 			+ "ORDER BY a.createdAt DESC")
 	public Page<Appointment> findAllOrderByCreatedAtDesc(
 			@Param("status") AppointmentStatus appointmentStatus,
