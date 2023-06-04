@@ -1,6 +1,9 @@
 package com.barbershop.application.mappers;
 
 import java.util.List;
+
+import org.springframework.data.domain.Page;
+
 import com.barbershop.application.DTOs.ServiceDTO;
 import com.barbershop.application.entities.Service;
 import com.barbershop.application.enums.KindOfCare;
@@ -25,10 +28,16 @@ public class ServiceMapper {
 				service.getCurrentPrice(),
 				service.getName(),
 				service.getDuration(),
-				service.getKindOfCare().getValue());
+				service.getKindOfCare().getValue(),
+				service.getActive(),
+				service.getCreatedAt());
 	}
 	
-	public static List<ServiceDTO> reverseMap(List<Service> serviceDtoList) {
-		return serviceDtoList.stream().map(x -> reverseMap(x)).toList();
+	public static List<ServiceDTO> reverseMap(List<Service> serviceList) {
+		return serviceList.stream().map(x -> reverseMap(x)).toList();
+	}
+	
+	public static Page<ServiceDTO> reverseMap(Page<Service> serviceList) {
+		return serviceList.map(x -> reverseMap(x));
 	}
 }

@@ -16,6 +16,7 @@ public class Service extends BaseEntity<Long>{
 	private Float currentPrice;
 	private String name;
 	private Integer duration;
+	private Boolean active;
 	
 	@OneToMany(mappedBy = "service")
 	private List<Appointment> appointments;
@@ -30,6 +31,7 @@ public class Service extends BaseEntity<Long>{
 		this.name = name;
 		this.duration = duration;
 		this.kindOfCare = kindOfCare;
+		this.active = true;
 		validate();
 	}
 
@@ -51,6 +53,14 @@ public class Service extends BaseEntity<Long>{
 	
 	public List<Appointment> getAppointments() {
 		return appointments;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 	@Override
