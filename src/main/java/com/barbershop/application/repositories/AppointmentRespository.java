@@ -20,7 +20,7 @@ public interface AppointmentRespository
 	@Query("SELECT a FROM Appointment a " + "WHERE a.customer.id = ?1 " + "ORDER BY a.createdAt DESC")
 	public Page<Appointment> findByCustomerIdOrderByDesc(Long customerId, Pageable pageable);
 
-	@Query("SELECT a FROM Appointment a " + "WHERE a.employee.id = ?1 "
+	@Query("SELECT a FROM Appointment a " + "WHERE a.employee.id = ?1 AND a.status != \"CANCELED\" "
 			+ "AND CAST(a.createdAt AS date) = CAST(?2 AS date)")
 	public List<Appointment> findByEmployeeIdAndCreatedAt(Long employeeId, Date createdAt);
 
